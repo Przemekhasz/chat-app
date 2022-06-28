@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use App\Repository\MessageRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Index;
 
@@ -27,10 +28,10 @@ class Message
     private ?string $content;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'messages')]
-    private User $user;
+    private $user;
 
     #[ORM\ManyToOne(targetEntity: Conversation::class, inversedBy: 'messages')]
-    private Conversation $conversation;
+    private $conversation;
 
     public function getId(): ?int
     {

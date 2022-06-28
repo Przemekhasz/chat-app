@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ParticipantRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ParticipantRepository::class)]
@@ -14,17 +15,17 @@ class Participant
     private $id;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'participants')]
-    private User $user;
+    private $user;
 
     #[ORM\ManyToOne(targetEntity: Conversation::class, inversedBy: 'participants')]
-    private Conversation $conversation;
+    private $conversation;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getUser(): ?User
+    public function getUser(): ArrayCollection
     {
         return $this->user;
     }
@@ -36,7 +37,7 @@ class Participant
         return $this;
     }
 
-    public function getConversation(): ?Conversation
+    public function getConversation(): ArrayCollection
     {
         return $this->conversation;
     }

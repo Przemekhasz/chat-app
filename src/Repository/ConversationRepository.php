@@ -63,4 +63,29 @@ class ConversationRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+    public function findConversationByParticipants(int $otherUserId, int $myId)
+    {
+        $queryBuilder = $this->createQueryBuilder('c');
+        $queryBuilder->select($queryBuilder->expr()->count('p.conversation'))
+            ->innerJoin('c.participants', 'p')
+            ->where(
+                $queryBuilder->expr()->eq('p.user', ':me'),
+                $queryBuilder->expr()->eq('p.user', ':otherUser')
+            )
+            ->groupBy('p.conversation')
+            ->having(
+                $queryBuilder->expr()->eq(
+                    $queryBuilder->expr()->count('p.conversation'),
+                    2
+                )
+            )
+            ->setParameter([
+                'me' => $myId,
+                'otherUser' => $otherUserId
+            ])
+        ;
+
+        return $queryBuilder->getQuery()->getResult();
+    }
 }

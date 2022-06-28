@@ -25,10 +25,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private array $roles = [];
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Participant::class)]
-    private Participant $participants;
+    private $participants;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Message::class)]
-    private Message $messages;
+    private $messages;
 
     #[ORM\Column(type: 'string')]
     private string $password;
